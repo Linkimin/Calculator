@@ -69,7 +69,7 @@ public sealed class CalculatorEngineTests
     [Theory]
     [InlineData("5^0", 1)]
     [InlineData("5^1", 5)]
-    [InlineData("2^-2", 0.25)]    // отрицательный показатель
+    [InlineData("2^(-2)", 0.25)]    // отрицательный показатель
     public void Calculate_Power_EdgeCases(string expression, decimal expected)
     {
         var engine = CreateEngine();
