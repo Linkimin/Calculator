@@ -1,20 +1,26 @@
 using System.Text.Json;
+using BakhmatovCalculatorLib.Infrastructure;
 using BakhmatovCalculatorLib.Models;
 
 namespace BakhmatovCalculatorLib.Services;
 
 public sealed class HistoryService
 {
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    private static readonly JsonSerializerOptions ReadOptions = new()
     {
         PropertyNameCaseInsensitive = true
+    };
+
+    private static readonly JsonSerializerOptions WriteOptions = new(ReadOptions)
+    {
+        WriteIndented = true
     };
 
     private readonly string _filePath;
 
     public HistoryService(string? filePath = null)
     {
-        _filePath = filePath ?? GetDefaultFilePath("history.json");
+        _filePath = filePath ?? AppPaths.GetFilePath("history.json");
     }
 
     public IReadOnlyList<CalculationHistoryItem> Load()
@@ -25,31 +31,26 @@ public sealed class HistoryService
                 return Array.Empty<CalculationHistoryItem>();
 
             using var stream = File.OpenRead(_filePath);
-            var items = JsonSerializer.Deserialize<List<CalculationHistoryItem>>(stream, JsonOptions);
+            var items = JsonSerializer.Deserialize<List<CalculationHistoryItem>>(stream, ReadOptions);
             return items ?? new List<CalculationHistoryItem>();
         }
         catch
         {
-            // If something goes wrong (corrupted file, permission issues, etc.), do not crash the app.
             return Array.Empty<CalculationHistoryItem>();
         }
     }
 
     public void Save(IEnumerable<CalculationHistoryItem> items)
     {
-        var directory = Path.GetDirectoryName(_filePath);
-        if (!string.IsNullOrWhiteSpace(directory))
-            Directory.CreateDirectory(directory);
-
-        var json = JsonSerializer.Serialize(items, new JsonSerializerOptions(JsonOptions) { WriteIndented = true });
+        EnsureDirectory();
+        var json = JsonSerializer.Serialize(items, WriteOptions);
         File.WriteAllText(_filePath, json);
     }
 
-    private static string GetDefaultFilePath(string fileName)
+    private void EnsureDirectory()
     {
-        var baseDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        var appDir = Path.Combine(baseDir, "BakhmatovCalculator");
-        return Path.Combine(appDir, fileName);
+        var directory = Path.GetDirectoryName(_filePath);
+        if (!string.IsNullOrWhiteSpace(directory))
+            Directory.CreateDirectory(directory);
     }
 }
-
