@@ -1,20 +1,18 @@
+using System.Text.Json.Serialization;
+
 namespace BakhmatovCalculatorLib.Models;
 
 public sealed class CalculationHistoryItem
 {
-    public string Expression { get; set; } = string.Empty;
-    public decimal Result { get; set; }
-    public DateTime Timestamp { get; set; }
-
-    public CalculationHistoryItem()
-    {
-    }
-
+    [JsonConstructor]
     public CalculationHistoryItem(string expression, decimal result, DateTime timestamp)
     {
         Expression = expression;
         Result = result;
         Timestamp = timestamp;
     }
-}
 
+    public string Expression { get; }
+    public decimal Result { get; }
+    public DateTime Timestamp { get; }
+}
