@@ -1,4 +1,5 @@
 using BakhmatovCalculatorLib.Calculators;
+using BakhmatovCalculatorLib.Models;
 
 namespace BakhmatovCalculatorTests;
 
@@ -156,6 +157,90 @@ public sealed class CalculatorEngineTests
         var engine2 = new CalculatorEngine(historyPath, settingsPath);
         Assert.Single(engine2.GetHistory());
         Assert.Equal("2+2", engine2.GetHistory()[0].Expression);
+    }
+
+    // ──────────────────────────────────────────────
+    // ClearHistory
+    // ──────────────────────────────────────────────
+
+    [Fact]
+    public void ClearHistory_RemovesAllItems()
+    {
+        var engine = CreateEngine();
+        engine.Calculate("2+2");
+        engine.Calculate("3+3");
+
+        engine.ClearHistory();
+
+        Assert.Empty(engine.GetHistory());
+    }
+
+    [Fact]
+    public void ClearHistory_IsPersisted_AcrossEngineInstances()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "BakhmatovCalculatorTests", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        var historyPath = Path.Combine(root, "history.json");
+        var settingsPath = Path.Combine(root, "settings.json");
+
+        var engine1 = new CalculatorEngine(historyPath, settingsPath);
+        engine1.Calculate("2+2");
+        engine1.ClearHistory(); // SaveAll вызывается внутри
+
+        var engine2 = new CalculatorEngine(historyPath, settingsPath);
+        Assert.Empty(engine2.GetHistory());
+    }
+
+    // ──────────────────────────────────────────────
+    // ThemeSettings
+    // ──────────────────────────────────────────────
+
+    [Fact]
+    public void GetThemeSettings_ReturnsDefault_OnFreshEngine()
+    {
+        var engine = CreateEngine();
+        var settings = engine.GetThemeSettings();
+
+        Assert.True(settings.IsDarkTheme);
+        Assert.Equal("#1E90FF", settings.AccentColor);
+    }
+
+    [Fact]
+    public void UpdateThemeSettings_ChangesAreReflected()
+    {
+        var engine = CreateEngine();
+        var updated = new ThemeSettings(isDarkTheme: false, accentColor: "#FF0000");
+
+        engine.UpdateThemeSettings(updated);
+
+        var result = engine.GetThemeSettings();
+        Assert.False(result.IsDarkTheme);
+        Assert.Equal("#FF0000", result.AccentColor);
+    }
+
+    [Fact]
+    public void UpdateThemeSettings_IsPersisted_AcrossEngineInstances()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "BakhmatovCalculatorTests", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        var historyPath = Path.Combine(root, "history.json");
+        var settingsPath = Path.Combine(root, "settings.json");
+
+        var engine1 = new CalculatorEngine(historyPath, settingsPath);
+        engine1.UpdateThemeSettings(new ThemeSettings(isDarkTheme: false, accentColor: "#AABBCC"));
+
+        var engine2 = new CalculatorEngine(historyPath, settingsPath);
+        var settings = engine2.GetThemeSettings();
+
+        Assert.False(settings.IsDarkTheme);
+        Assert.Equal("#AABBCC", settings.AccentColor);
+    }
+
+    [Fact]
+    public void UpdateThemeSettings_NullArgument_ThrowsArgumentNullException()
+    {
+        var engine = CreateEngine();
+        Assert.Throws<ArgumentNullException>(() => engine.UpdateThemeSettings(null!));
     }
 }
 
