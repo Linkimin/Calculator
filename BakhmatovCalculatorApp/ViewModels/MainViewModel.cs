@@ -75,7 +75,10 @@ public sealed class MainViewModel : INotifyPropertyChanged
         set
         {
             if (SetProperty(ref _expression, value ?? string.Empty))
+            {
                 _evaluateCommand.RaiseCanExecuteChanged();
+                UpdatePreview();
+            }
         }
     }
 
@@ -142,6 +145,24 @@ public sealed class MainViewModel : INotifyPropertyChanged
         catch (Exception ex)
         {
             ResultText = $"Error: {ex.Message}";
+        }
+    }
+    private void UpdatePreview()
+    {
+        if (string.IsNullOrWhiteSpace(Expression))
+        {
+            ResultText = string.Empty;
+            return;
+        }
+
+        try
+        {
+            var result = _engine.Evaluate(Expression);
+            ResultText = result.ToString(CultureInfo.InvariantCulture);
+        }
+        catch
+        {
+            // Выражение неполное — не показываем ошибку
         }
     }
 
