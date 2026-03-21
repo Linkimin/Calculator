@@ -1,21 +1,23 @@
 <Window x:Class="BakhmatovCalculatorApp.MainWindow"
+        
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:infra="clr-namespace:BakhmatovCalculatorApp.Infrastructure"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}"
         Height="620"
         Width="900"
         MinHeight="500"
         MinWidth="680"
-        Background="{Binding PageBackground}"
         PreviewTextInput="OnPreviewTextInput"
         PreviewKeyDown="OnPreviewKeyDown">
 
     <Window.Resources>
 
         <!-- Общий шаблон с анимацией нажатия -->
+        <infra:StringToBrushConverter x:Key="B"/>
         <ControlTemplate x:Key="AnimatedButtonTemplate" TargetType="Button">
             <Border x:Name="RootBorder"
                     Background="{TemplateBinding Background}"
@@ -84,8 +86,8 @@
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="{Binding KeyBackground}"/>
-            <Setter Property="Foreground" Value="{Binding KeyForeground}"/>
+            <Setter Property="Background" Value="{Binding KeyBackground, Converter={StaticResource B}}"/>
+            <Setter Property="Foreground" Value="{Binding KeyForeground, Converter={StaticResource B}}"/>
             <Setter Property="Template" Value="{StaticResource AnimatedButtonTemplate}"/>
         </Style>
 
@@ -93,13 +95,13 @@
         <Style x:Key="FuncButtonStyle" TargetType="Button" BasedOn="{StaticResource NumButtonStyle}">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="{Binding SecondaryText}"/>
+            <Setter Property="Foreground" Value="{Binding SecondaryText, Converter={StaticResource B}}"/>
         </Style>
 
         <!-- Операторы: ÷ × − + -->
         <Style x:Key="OpButtonStyle" TargetType="Button" BasedOn="{StaticResource NumButtonStyle}">
-            <Setter Property="Background" Value="{Binding AccentKeyBackground}"/>
-            <Setter Property="Foreground" Value="{Binding AccentKeyForeground}"/>
+            <Setter Property="Background" Value="{Binding AccentKeyBackground, Converter={StaticResource B}}"/>
+            <Setter Property="Foreground" Value="{Binding AccentKeyForeground, Converter={StaticResource B}}"/>
             <Setter Property="FontSize" Value="20"/>
         </Style>
 
@@ -114,11 +116,11 @@
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="Padding" Value="20,0"/>
-            <Setter Property="Foreground" Value="{Binding KeyForeground}"/>
+            <Setter Property="Foreground" Value="{Binding KeyForeground, Converter={StaticResource B}}"/>
         </Style>
 
     </Window.Resources>
-
+    <Border Background="{Binding PageBackground, Converter={StaticResource B}}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -137,7 +139,7 @@
             <!-- Хедер: минималистичный -->
             <Grid Grid.Row="0">
                 <TextBlock Text="{Binding WindowTitle}"
-                           Foreground="{Binding SecondaryText}"
+                           Foreground="{Binding SecondaryText, Converter={StaticResource B}}"
                            FontSize="13"
                            FontWeight="SemiBold"
                            VerticalAlignment="Center"/>
@@ -158,7 +160,7 @@
             <!-- Дисплей -->
             <Border Grid.Row="1"
                     CornerRadius="8"
-                    Background="{Binding PanelBackground}">
+                    Background="{Binding PanelBackground, Converter={StaticResource B}}">
                 <Grid Margin="16,10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -169,7 +171,7 @@
 
                     <TextBlock Grid.Row="1"
                                Text="{Binding ExpressionLabelText}"
-                               Foreground="{Binding SecondaryText}"
+                               Foreground="{Binding SecondaryText, Converter={StaticResource B}}"
                                FontSize="11"
                                HorizontalAlignment="Right"
                                Margin="0,0,0,2"/>
@@ -179,7 +181,7 @@
                              IsReadOnly="True"
                              Background="Transparent"
                              BorderThickness="0"
-                             Foreground="{Binding SecondaryText}"
+                             Foreground="{Binding SecondaryText, Converter={StaticResource B}}"
                              FontSize="22"
                              HorizontalContentAlignment="Right"
                              Margin="0,0,0,4"/>
@@ -189,7 +191,7 @@
                              IsReadOnly="True"
                              Background="Transparent"
                              BorderThickness="0"
-                             Foreground="{Binding KeyForeground}"
+                             Foreground="{Binding KeyForeground, Converter={StaticResource B}}"
                              FontSize="36"
                              FontWeight="Light"
                              HorizontalContentAlignment="Right"/>
@@ -263,10 +265,10 @@
                         Command="{Binding AppendCommand}" CommandParameter="+" Content="+" Margin="3"/>
             </Grid>
         </Grid>
-
-        <!-- Правая колонка: история -->
+        
+    <!-- Правая колонка: история -->
         <Border Grid.Column="1"
-                Background="{Binding PanelBackground}">
+                Background="{Binding PanelBackground, Converter={StaticResource B}}">
             <Grid Margin="14,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -275,7 +277,7 @@
 
                 <TextBlock Grid.Row="0"
                            Text="{Binding HistoryTitleText}"
-                           Foreground="{Binding SecondaryText}"
+                           Foreground="{Binding SecondaryText, Converter={StaticResource B}}"
                            FontSize="12"
                            FontWeight="SemiBold"
                            Margin="0,0,0,10"/>
@@ -334,4 +336,5 @@
             </Grid>
         </Border>
     </Grid>
+    </Border>
 </Window>
