@@ -4,8 +4,14 @@
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 [![WPF](https://img.shields.io/badge/UI-WPF-0078D4?style=flat-square&logo=windows)](https://learn.microsoft.com/ru-ru/dotnet/desktop/wpf/)
+[![C#](https://img.shields.io/badge/Language-C%23-239120?style=flat-square&logo=csharp)](https://learn.microsoft.com/ru-ru/dotnet/csharp/)
 [![Tests](https://img.shields.io/badge/Tests-xUnit-green?style=flat-square)](https://xunit.net/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+[![Windows](https://img.shields.io/badge/OS-Windows-0078D4?style=flat-square&logo=windows)](https://www.microsoft.com/windows)
+[![Build](https://github.com/Linkimin/Calculator/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Linkimin/Calculator/actions)
+[![Tests](https://github.com/Linkimin/Calculator/actions/workflows/dotnet.yml/badge.svg?event=push)](https://github.com/Linkimin/Calculator/actions)
+[![Release](https://img.shields.io/github/v/release/Linkimin/Calculator?style=flat-square&logo=github)](https://github.com/Linkimin/Calculator/releases)
+[![Downloads](https://img.shields.io/github/downloads/Linkimin/Calculator/total?style=flat-square&logo=github)](https://github.com/Linkimin/Calculator/releases)
 
 ## ✨ Возможности
 
