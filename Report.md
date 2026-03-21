@@ -19,6 +19,7 @@
 BakhmatovCalculator/
 ├── BakhmatovCalculator.sln
 ├── Report.md
+├── LICENSE.md
 ├── README.md
 ├── BakhmatovCalculatorLib/
 │   ├── Calculators/
