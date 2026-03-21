@@ -135,6 +135,8 @@ public static class ReversePolishNotation
         return tokens;
     }
 
+    // Примечание: унарный минус после ^ должен быть в скобках: 2^(-2), а не 2^-2.
+    // Shunting-yard выталкивает ^ из стека до того, как правый операнд попадает в него.
     private static IReadOnlyList<Token> ToRpn(IReadOnlyList<Token> tokens)
     {
         var output = new List<Token>(tokens.Count);
@@ -225,7 +227,7 @@ public static class ReversePolishNotation
         }
 
         if (stack.Count != 1)
-            throw new FormatException("Expression is invalid.");
+            throw new InvalidOperationException("Expression has too many operands.");
 
         return stack.Pop();
     }
