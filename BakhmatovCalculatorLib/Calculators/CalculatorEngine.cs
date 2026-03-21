@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using BakhmatovCalculatorLib.Models;
 using BakhmatovCalculatorLib.Services;
 
@@ -23,9 +22,9 @@ public sealed class CalculatorEngine
         _settings = _settingsService.Load();
     }
 
-    public IReadOnlyList<CalculationHistoryItem> History => _history;
-    public ThemeSettings Settings => _settings;
-
+    /// <summary>
+    /// Вычисляет выражение и сохраняет результат в историю.
+    /// </summary>
     public decimal Calculate(string expression)
     {
         var normalized = NormalizeExpression(expression);
@@ -34,7 +33,9 @@ public sealed class CalculatorEngine
         return result;
     }
 
-    // Used by UI for "preview" without polluting history.
+    /// <summary>
+    /// Вычисляет выражение без записи в историю (preview).
+    /// </summary>
     public decimal Evaluate(string expression)
     {
         var normalized = NormalizeExpression(expression);
