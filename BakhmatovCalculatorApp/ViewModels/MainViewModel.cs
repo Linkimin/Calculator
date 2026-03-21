@@ -50,6 +50,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
         AppendCommand = new RelayCommand(p => AppendToken(p as string ?? string.Empty));
         ClearAllCommand = new RelayCommand(_ => ClearAll());
         ClearEntryCommand = new RelayCommand(_ => ClearEntry());
+        ClearHistoryCommand = new RelayCommand(_ => ClearHistory());
         BackspaceCommand = new RelayCommand(_ => Backspace());
         ToggleThemeCommand = new RelayCommand(_ => ToggleTheme());
         ToggleLanguageCommand = new RelayCommand(_ => ToggleLanguage());
@@ -116,6 +117,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
     public ICommand ToggleThemeCommand { get; }
     public ICommand ToggleLanguageCommand { get; }
     public ICommand UseHistoryCommand { get; }
+    public ICommand ClearHistoryCommand { get; }
 
     public void Persist() => _engine.SaveAll();
 
@@ -170,6 +172,17 @@ public sealed class MainViewModel : INotifyPropertyChanged
     {
         Expression = string.Empty;
         ResultText = string.Empty;
+    }
+    private void ClearHistory()
+    {
+        _engine.ClearHistory();
+        HistoryItems.Clear();
+    }
+    private string _clearHistoryText = string.Empty;
+    public string ClearHistoryText
+    {
+        get => _clearHistoryText;
+        private set => SetProperty(ref _clearHistoryText, value);
     }
 
     private void ClearEntry()
@@ -282,6 +295,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
             HistoryTitleText = "История";
             ExpressionLabelText = "Выражение";
             ResultLabelText = "Результат";
+            ClearHistoryText = "Очистить историю";
             return;
         }
 
@@ -291,6 +305,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
         HistoryTitleText = "History";
         ExpressionLabelText = "Expression";
         ResultLabelText = "Result";
+        ClearHistoryText = "Clear history";
     }
 
     private static string AdjustHex(string hex, double factor)

@@ -121,62 +121,62 @@
 
     </Window.Resources>
     <Border Background="{Binding PageBackground, Converter={StaticResource B}}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="240"/>
-        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="240"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- Левая колонка: хедер + дисплей + клавиши -->
-        <Grid Grid.Column="0" Margin="16,10,8,16">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="44"/>
-                <RowDefinition Height="130"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <!-- Левая колонка: хедер + дисплей + клавиши -->
+            <Grid Grid.Column="0" Margin="16,10,8,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="130"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <!-- Хедер: минималистичный -->
-            <Grid Grid.Row="0">
-                <TextBlock Text="{Binding WindowTitle}"
+                <!-- Хедер: минималистичный -->
+                <Grid Grid.Row="0">
+                    <TextBlock Text="{Binding WindowTitle}"
                            Foreground="{Binding SecondaryText, Converter={StaticResource B}}"
                            FontSize="13"
                            FontWeight="SemiBold"
                            VerticalAlignment="Center"/>
-                <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Margin="0,0,2,0">
-                    <Button Style="{StaticResource ToolButtonStyle}"
+                        <Button Style="{StaticResource ToolButtonStyle}"
                             Command="{Binding ToggleLanguageCommand}"
                             Content="{Binding LanguageButtonText}"
                             Margin="0,0,4,0"/>
-                    <Button Style="{StaticResource ToolButtonStyle}"
+                        <Button Style="{StaticResource ToolButtonStyle}"
                             Command="{Binding ToggleThemeCommand}"
                             Content="{Binding ThemeButtonText}"/>
-                </StackPanel>
-            </Grid>
+                    </StackPanel>
+                </Grid>
 
-            <!-- Дисплей -->
-            <Border Grid.Row="1"
+                <!-- Дисплей -->
+                <Border Grid.Row="1"
                     CornerRadius="8"
                     Background="{Binding PanelBackground, Converter={StaticResource B}}">
-                <Grid Margin="16,10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                    <Grid Margin="16,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="1"
+                        <TextBlock Grid.Row="1"
                                Text="{Binding ExpressionLabelText}"
                                Foreground="{Binding SecondaryText, Converter={StaticResource B}}"
                                FontSize="11"
                                HorizontalAlignment="Right"
                                Margin="0,0,0,2"/>
 
-                    <TextBox Grid.Row="2"
+                        <TextBox Grid.Row="2"
                              Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}"
                              IsReadOnly="True"
                              Background="Transparent"
@@ -186,7 +186,7 @@
                              HorizontalContentAlignment="Right"
                              Margin="0,0,0,4"/>
 
-                    <TextBox Grid.Row="3"
+                        <TextBox Grid.Row="3"
                              Text="{Binding ResultText}"
                              IsReadOnly="True"
                              Background="Transparent"
@@ -195,25 +195,25 @@
                              FontSize="36"
                              FontWeight="Light"
                              HorizontalContentAlignment="Right"/>
-                </Grid>
-            </Border>
+                    </Grid>
+                </Border>
 
-            <!-- Клавиатура -->
-            <Grid Grid.Row="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <!-- Клавиатура -->
+                <Grid Grid.Row="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
                     <!-- Строка 0: скобки + очистка -->
                     <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource FuncButtonStyle}"
@@ -273,75 +273,88 @@
         Command="{Binding EvaluateCommand}" Content="=" Margin="3"
         Grid.ColumnSpan="2"/>
                 </Grid>
-        </Grid>
-        
-    <!-- Правая колонка: история -->
-        <Border Grid.Column="1"
-                Background="{Binding PanelBackground, Converter={StaticResource B}}">
-            <Grid Margin="14,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Row="0"
-                           Text="{Binding HistoryTitleText}"
-                           Foreground="{Binding SecondaryText, Converter={StaticResource B}}"
-                           FontSize="12"
-                           FontWeight="SemiBold"
-                           Margin="0,0,0,10"/>
-
-                <ScrollViewer Grid.Row="1"
-                              VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled">
-                    <ItemsControl ItemsSource="{Binding HistoryItems}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Margin="0,0,0,2"
-                                        CornerRadius="4"
-                                        Padding="8,6"
-                                        Cursor="Hand">
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{Binding DataContext.KeyBackground, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource B}}" />
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                    <Border.InputBindings>
-                                        <MouseBinding MouseAction="LeftClick"
-                                                      Command="{Binding DataContext.UseHistoryCommand,
-                                                      RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                      CommandParameter="{Binding}"/>
-                                    </Border.InputBindings>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding Expression}"
-                                                   Foreground="{Binding DataContext.SecondaryText,
-                                                   RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                   FontSize="11"
-                                                   TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Text="{Binding Result}"
-                                                   Foreground="{Binding DataContext.KeyForeground,
-                                                   RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                   FontSize="18"
-                                                   FontWeight="SemiBold"
-                                                   TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Text="{Binding Timestamp}"
-                                                   Foreground="{Binding DataContext.SecondaryText,
-                                                   RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                   FontSize="10"
-                                                   Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
             </Grid>
-        </Border>
-    </Grid>
+
+            <!-- Правая колонка: история -->
+            <Border Grid.Column="1"
+        Background="{Binding PanelBackground, Converter={StaticResource B}}">
+                <Grid Margin="14,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                   Text="{Binding HistoryTitleText}"
+                   Foreground="{Binding SecondaryText, Converter={StaticResource B}}"
+                   FontSize="12"
+                   FontWeight="SemiBold"
+                   Margin="0,0,0,6"/>
+
+                    <Button Grid.Row="1"
+                HorizontalAlignment="Stretch"
+                Style="{StaticResource FuncButtonStyle}"
+                Command="{Binding ClearHistoryCommand}"
+                Content="{Binding ClearHistoryText}"
+                FontSize="11"
+                Height="24"
+                Margin="0,0,0,10"/>
+
+                    <ScrollViewer Grid.Row="2"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding HistoryItems}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,2"
+                                CornerRadius="4"
+                                Padding="8,6"
+                                Cursor="Hand">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background"
+                                                    Value="{Binding DataContext.KeyBackground,
+                                                    RelativeSource={RelativeSource AncestorType=ItemsControl},
+                                                    Converter={StaticResource B}}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Border.InputBindings>
+                                            <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding DataContext.UseHistoryCommand,
+                                              RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                              CommandParameter="{Binding}"/>
+                                        </Border.InputBindings>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Expression}"
+                                           Foreground="{Binding DataContext.SecondaryText,
+                                           RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                           FontSize="11"
+                                           TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding Result}"
+                                           Foreground="{Binding DataContext.KeyForeground,
+                                           RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding Timestamp}"
+                                           Foreground="{Binding DataContext.SecondaryText,
+                                           RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                           FontSize="10"
+                                           Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
     </Border>
 </Window>
