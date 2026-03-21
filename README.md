@@ -2,10 +2,10 @@
 
 Настольный калькулятор на C# / WPF (.NET 8) с вычислением арифметических выражений, историей операций и поддержкой тёмной/светлой темы.
 
-![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square&logo=dotnet)
-![WPF](https://img.shields.io/badge/UI-WPF-0078D4?style=flat-square&logo=windows)
-![xUnit](https://img.shields.io/badge/Tests-xUnit-green?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
+[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
+[![WPF](https://img.shields.io/badge/UI-WPF-0078D4?style=flat-square&logo=windows)](https://learn.microsoft.com/ru-ru/dotnet/desktop/wpf/)
+[![Tests](https://img.shields.io/badge/Tests-xUnit-green?style=flat-square)](https://xunit.net/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
 ## ✨ Возможности
 
