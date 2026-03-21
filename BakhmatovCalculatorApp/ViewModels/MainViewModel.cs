@@ -367,21 +367,21 @@ public sealed class MainViewModel : INotifyPropertyChanged
         }
         else
         {
-            PageBackground = new SolidColorBrush(Color.FromRgb(245, 247, 251));
-            PanelBackground = Brushes.White;
+            PageBackground = new SolidColorBrush(Color.FromRgb(218, 222, 230));
+            PanelBackground = new SolidColorBrush(Color.FromRgb(228, 232, 240));
 
-            KeyBackground = new SolidColorBrush(Color.FromRgb(239, 242, 247));
-            HoverKeyBackground = new SolidColorBrush(Color.FromRgb(229, 234, 242));
-            PressedKeyBackground = new SolidColorBrush(Color.FromRgb(217, 223, 233));
-            KeyBorderBrush = new SolidColorBrush(Color.FromRgb(214, 218, 229));
-            KeyForeground = new SolidColorBrush(Color.FromRgb(29, 36, 51));
+            KeyBackground = new SolidColorBrush(Color.FromRgb(210, 215, 225));
+            HoverKeyBackground = new SolidColorBrush(Color.FromRgb(200, 205, 216));
+            PressedKeyBackground = new SolidColorBrush(Color.FromRgb(188, 194, 206));
+            KeyBorderBrush = new SolidColorBrush(Color.FromRgb(190, 196, 210));
+            KeyForeground = new SolidColorBrush(Color.FromRgb(22, 28, 42));
 
             AccentKeyBackground = new SolidColorBrush(accentColor);
             HoverAccentKeyBackground = new SolidColorBrush(AdjustColor(accentColor, 1.08));
             PressedAccentKeyBackground = new SolidColorBrush(AdjustColor(accentColor, 0.9));
             AccentKeyForeground = Brushes.White;
 
-            SecondaryText = new SolidColorBrush(Color.FromRgb(92, 100, 120));
+            SecondaryText = new SolidColorBrush(Color.FromRgb(80, 90, 112));
         }
     }
 

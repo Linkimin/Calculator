@@ -3,374 +3,335 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BakhmatovCalculatorApp"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}"
-        Height="560"
-        Width="980"
+        Height="620"
+        Width="900"
+        MinHeight="500"
+        MinWidth="680"
         Background="{Binding PageBackground}"
         PreviewTextInput="OnPreviewTextInput"
         PreviewKeyDown="OnPreviewKeyDown">
 
     <Window.Resources>
-        <Style x:Key="FlatButtonStyle" TargetType="Button">
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="{Binding KeyBackground}"/>
-            <Setter Property="Foreground" Value="{Binding KeyForeground}"/>
-            <Setter Property="BorderBrush" Value="{Binding KeyBorderBrush}"/>
-            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="RootBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="14"
-                                Opacity="1"
-                                RenderTransformOrigin="0.5,0.5">
-                            <Border.RenderTransform>
-                                <ScaleTransform ScaleX="1" ScaleY="1"/>
-                            </Border.RenderTransform>
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{Binding HoverKeyBackground}"/>
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="Opacity"
-                                                             To="0.96"
-                                                             Duration="0:0:0.12"/>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
-                                                             To="1.02"
-                                                             Duration="0:0:0.12">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuadraticEase EasingMode="EaseOut"/>
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
-                                                             To="1.02"
-                                                             Duration="0:0:0.12">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuadraticEase EasingMode="EaseOut"/>
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="Opacity"
-                                                             To="1"
-                                                             Duration="0:0:0.14"/>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
-                                                             To="1"
-                                                             Duration="0:0:0.14">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuadraticEase EasingMode="EaseOut"/>
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
-                                                             To="1"
-                                                             Duration="0:0:0.14">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuadraticEase EasingMode="EaseOut"/>
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="{Binding PressedKeyBackground}"/>
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="Opacity"
-                                                             To="0.9"
-                                                             Duration="0:0:0.06"/>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
-                                                             To="0.965"
-                                                             Duration="0:0:0.06">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuadraticEase EasingMode="EaseInOut"/>
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation Storyboard.TargetName="RootBorder"
-                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
-                                                             To="0.965"
-                                                             Duration="0:0:0.06">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuadraticEase EasingMode="EaseInOut"/>
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
-        <Style x:Key="AccentButtonStyle" TargetType="Button" BasedOn="{StaticResource FlatButtonStyle}">
-            <Setter Property="Background" Value="{Binding AccentKeyBackground}"/>
-            <Setter Property="Foreground" Value="{Binding AccentKeyForeground}"/>
-            <Setter Property="BorderBrush" Value="{Binding AccentKeyBackground}"/>
-            <Style.Triggers>
+        <!-- Общий шаблон с анимацией нажатия -->
+        <ControlTemplate x:Key="AnimatedButtonTemplate" TargetType="Button">
+            <Border x:Name="RootBorder"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="4"
+                    RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Border.RenderTransform>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{Binding HoverAccentKeyBackground}"/>
-                    <Setter Property="BorderBrush" Value="{Binding HoverAccentKeyBackground}"/>
+                    <Setter TargetName="RootBorder" Property="Opacity" Value="0.82"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="{Binding PressedAccentKeyBackground}"/>
-                    <Setter Property="BorderBrush" Value="{Binding PressedAccentKeyBackground}"/>
+                    <Setter TargetName="RootBorder" Property="Opacity" Value="0.68"/>
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                 To="0.96" Duration="0:0:0.06">
+                                    <DoubleAnimation.EasingFunction>
+                                        <QuadraticEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                 To="0.96" Duration="0:0:0.06">
+                                    <DoubleAnimation.EasingFunction>
+                                        <QuadraticEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                 To="1" Duration="0:0:0.1">
+                                    <DoubleAnimation.EasingFunction>
+                                        <QuadraticEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                 To="1" Duration="0:0:0.1">
+                                    <DoubleAnimation.EasingFunction>
+                                        <QuadraticEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
                 </Trigger>
-            </Style.Triggers>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <!-- Цифры -->
+        <Style x:Key="NumButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="{Binding KeyBackground}"/>
+            <Setter Property="Foreground" Value="{Binding KeyForeground}"/>
+            <Setter Property="Template" Value="{StaticResource AnimatedButtonTemplate}"/>
         </Style>
 
-        <Style x:Key="ThemeButtonStyle" TargetType="Button" BasedOn="{StaticResource AccentButtonStyle}">
+        <!-- Служебные: C, CE, xʸ, ⌫ -->
+        <Style x:Key="FuncButtonStyle" TargetType="Button" BasedOn="{StaticResource NumButtonStyle}">
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="14,6"/>
-            <Setter Property="MinWidth" Value="120"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="RootBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="10"
-                                Opacity="1"
-                                RenderTransformOrigin="0.5,0.5">
-                            <Border.RenderTransform>
-                                <ScaleTransform ScaleX="1" ScaleY="1"/>
-                            </Border.RenderTransform>
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="RootBorder" Property="Opacity" Value="0.9"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="RootBorder" Property="Opacity" Value="0.82"/>
-                                <Setter TargetName="RootBorder" Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{Binding SecondaryText}"/>
         </Style>
+
+        <!-- Операторы: ÷ × − + -->
+        <Style x:Key="OpButtonStyle" TargetType="Button" BasedOn="{StaticResource NumButtonStyle}">
+            <Setter Property="Background" Value="{Binding AccentKeyBackground}"/>
+            <Setter Property="Foreground" Value="{Binding AccentKeyForeground}"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+
+        <!-- Равно -->
+        <Style x:Key="EqualButtonStyle" TargetType="Button" BasedOn="{StaticResource OpButtonStyle}">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <!-- Маленькие кнопки тулбара -->
+        <Style x:Key="ToolButtonStyle" TargetType="Button" BasedOn="{StaticResource NumButtonStyle}">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="Foreground" Value="{Binding KeyForeground}"/>
+        </Style>
+
     </Window.Resources>
 
-    <Grid Margin="16">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="56"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="240"/>
+        </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" CornerRadius="18" Background="{Binding PanelBackground}" BorderBrush="{Binding KeyBorderBrush}" BorderThickness="1">
-            <Grid Margin="16,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+        <!-- Левая колонка: хедер + дисплей + клавиши -->
+        <Grid Grid.Column="0" Margin="16,10,8,16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="44"/>
+                <RowDefinition Height="130"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Хедер: минималистичный -->
+            <Grid Grid.Row="0">
                 <TextBlock Text="{Binding WindowTitle}"
-                           Foreground="{Binding KeyForeground}"
+                           Foreground="{Binding SecondaryText}"
+                           FontSize="13"
                            FontWeight="SemiBold"
-                           VerticalAlignment="Center"
-                           FontSize="18"/>
-
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Style="{StaticResource FlatButtonStyle}"
+                           VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="0,0,2,0">
+                    <Button Style="{StaticResource ToolButtonStyle}"
                             Command="{Binding ToggleLanguageCommand}"
                             Content="{Binding LanguageButtonText}"
-                            Margin="0,0,10,0"
-                            Height="36"
-                            MinWidth="64"
-                            FontSize="14"/>
-
-                    <Button Style="{StaticResource ThemeButtonStyle}"
+                            Margin="0,0,4,0"/>
+                    <Button Style="{StaticResource ToolButtonStyle}"
                             Command="{Binding ToggleThemeCommand}"
-                            Content="{Binding ThemeButtonText}"
-                            VerticalAlignment="Center"/>
+                            Content="{Binding ThemeButtonText}"/>
                 </StackPanel>
             </Grid>
-        </Border>
 
-        <Grid Grid.Row="1" Margin="0,12,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1.1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="0,0,12,0">
+            <!-- Дисплей -->
+            <Border Grid.Row="1"
+                    CornerRadius="8"
+                    Background="{Binding PanelBackground}">
+                <Grid Margin="16,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="1"
+                               Text="{Binding ExpressionLabelText}"
+                               Foreground="{Binding SecondaryText}"
+                               FontSize="11"
+                               HorizontalAlignment="Right"
+                               Margin="0,0,0,2"/>
+
+                    <TextBox Grid.Row="2"
+                             Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="True"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Foreground="{Binding SecondaryText}"
+                             FontSize="22"
+                             HorizontalContentAlignment="Right"
+                             Margin="0,0,0,4"/>
+
+                    <TextBox Grid.Row="3"
+                             Text="{Binding ResultText}"
+                             IsReadOnly="True"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Foreground="{Binding KeyForeground}"
+                             FontSize="36"
+                             FontWeight="Light"
+                             HorizontalContentAlignment="Right"/>
+                </Grid>
+            </Border>
+
+            <!-- Клавиатура -->
+            <Grid Grid.Row="3">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="140"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Строка 0: служебные -->
+                <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource FuncButtonStyle}"
+                        Command="{Binding ClearAllCommand}" Content="C" Margin="3"/>
+                <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource FuncButtonStyle}"
+                        Command="{Binding ClearEntryCommand}" Content="CE" Margin="3"/>
+                <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource FuncButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="^" Content="xʸ" Margin="3"/>
+                <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource FuncButtonStyle}"
+                        Command="{Binding BackspaceCommand}" Content="⌫" FontSize="16" Margin="3"/>
+
+                <!-- Строка 1 -->
+                <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="7" Content="7" Margin="3"/>
+                <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="8" Content="8" Margin="3"/>
+                <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="9" Content="9" Margin="3"/>
+                <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource OpButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="/" Content="÷" Margin="3"/>
+
+                <!-- Строка 2 -->
+                <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="4" Content="4" Margin="3"/>
+                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="5" Content="5" Margin="3"/>
+                <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="6" Content="6" Margin="3"/>
+                <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource OpButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="*" Content="×" Margin="3"/>
+
+                <!-- Строка 3 -->
+                <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="1" Content="1" Margin="3"/>
+                <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="2" Content="2" Margin="3"/>
+                <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="3" Content="3" Margin="3"/>
+                <Button Grid.Row="3" Grid.Column="3" Style="{StaticResource OpButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="-" Content="−" Margin="3"/>
+
+                <!-- Строка 4 -->
+                <Button Grid.Row="4" Grid.Column="0" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="0" Content="0" Margin="3"/>
+                <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource NumButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="." Content="." Margin="3"/>
+                <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource EqualButtonStyle}"
+                        Command="{Binding EvaluateCommand}" Content="=" Margin="3"/>
+                <Button Grid.Row="4" Grid.Column="3" Style="{StaticResource OpButtonStyle}"
+                        Command="{Binding AppendCommand}" CommandParameter="+" Content="+" Margin="3"/>
+            </Grid>
+        </Grid>
+
+        <!-- Правая колонка: история -->
+        <Border Grid.Column="1"
+                Background="{Binding PanelBackground}">
+            <Grid Margin="14,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0"
-                        CornerRadius="18"
-                        Background="{Binding PanelBackground}"
-                        BorderBrush="{Binding KeyBorderBrush}"
-                        BorderThickness="1">
-                    <Grid Margin="16">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Text="{Binding HistoryTitleText}"
+                           Foreground="{Binding SecondaryText}"
+                           FontSize="12"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,10"/>
 
-                        <TextBlock Text="{Binding ExpressionLabelText}"
-                                   Grid.Row="0"
-                                   Foreground="{Binding SecondaryText}"
-                                   FontSize="12"
-                                   Margin="0,0,0,6"/>
-
-                        <TextBox Grid.Row="1"
-                                 Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}"
-                                 IsReadOnly="True"
-                                 Background="Transparent"
-                                 BorderThickness="0"
-                                 Foreground="{Binding KeyForeground}"
-                                 FontSize="22"
-                                 HorizontalContentAlignment="Right"/>
-
-                        <TextBlock Text="{Binding ResultLabelText}"
-                                   Grid.Row="2"
-                                   Foreground="{Binding SecondaryText}"
-                                   FontSize="12"
-                                   Margin="0,12,0,4"/>
-
-                        <TextBox Grid.Row="2"
-                                 Height="34"
-                                 Margin="0,22,0,0"
-                                 Text="{Binding ResultText}"
-                                 IsReadOnly="True"
-                                 Background="Transparent"
-                                 BorderThickness="0"
-                                 Foreground="{Binding AccentKeyForeground}"
-                                 FontSize="18"
-                                 HorizontalContentAlignment="Right"/>
-                    </Grid>
-                </Border>
-
-                <Grid Grid.Row="1" Margin="0,12,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Row 0 -->
-                    <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource FlatButtonStyle}" Command="{Binding ClearAllCommand}" Content="C"/>
-                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource FlatButtonStyle}" Command="{Binding ClearEntryCommand}" Content="CE"/>
-                    <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource AccentButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="^" Content="^"/>
-                    <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource AccentButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="/" Content="/"/>
-
-                    <!-- Row 1 -->
-                    <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="7" Content="7"/>
-                    <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="8" Content="8"/>
-                    <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="9" Content="9"/>
-                    <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource AccentButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="*" Content="*"/>
-
-                    <!-- Row 2 -->
-                    <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="4" Content="4"/>
-                    <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="5" Content="5"/>
-                    <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="6" Content="6"/>
-                    <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource AccentButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="-" Content="-"/>
-
-                    <!-- Row 3 -->
-                    <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="1" Content="1"/>
-                    <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="2" Content="2"/>
-                    <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="3" Content="3"/>
-                    <Button Grid.Row="3" Grid.Column="3" Style="{StaticResource AccentButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="+" Content="+"/>
-
-                    <!-- Row 4 -->
-                    <Button Grid.Row="4" Grid.Column="0" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="0" Content="0"/>
-                    <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource FlatButtonStyle}" Command="{Binding AppendCommand}" CommandParameter="." Content="."/>
-                    <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource AccentButtonStyle}" Command="{Binding EvaluateCommand}" Content="="/>
-                    <Button Grid.Row="4" Grid.Column="3" Style="{StaticResource FlatButtonStyle}" Command="{Binding BackspaceCommand}" Content="&lt;-"/>
-                </Grid>
-            </Grid>
-
-            <Border Grid.Column="1"
-                    CornerRadius="18"
-                    Background="{Binding PanelBackground}"
-                    BorderBrush="{Binding KeyBorderBrush}"
-                    BorderThickness="1">
-                <Grid Margin="12">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0"
-                               Text="{Binding HistoryTitleText}"
-                               Foreground="{Binding KeyForeground}"
-                               FontWeight="SemiBold"
-                               FontSize="16"
-                               Margin="0,4,0,10"/>
-
-                    <ListBox Grid.Row="1"
-                             ItemsSource="{Binding HistoryItems}"
-                             BorderThickness="0"
-                             Background="Transparent"
-                             ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <ListBox.ItemTemplate>
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding HistoryItems}">
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding DataContext.UseHistoryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource FlatButtonStyle}"
-                                        Padding="8"
-                                        Margin="0,0,0,8">
+                                <Border Margin="0,0,0,2"
+                                        CornerRadius="4"
+                                        Padding="8,6"
+                                        Cursor="Hand">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background"
+                                                            Value="{Binding DataContext.KeyBackground,
+                                                            RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Border.InputBindings>
+                                        <MouseBinding MouseAction="LeftClick"
+                                                      Command="{Binding DataContext.UseHistoryCommand,
+                                                      RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                      CommandParameter="{Binding}"/>
+                                    </Border.InputBindings>
                                     <StackPanel>
                                         <TextBlock Text="{Binding Expression}"
-                                                   Foreground="{Binding DataContext.KeyForeground, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                   FontWeight="SemiBold"
+                                                   Foreground="{Binding DataContext.SecondaryText,
+                                                   RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                   FontSize="11"
                                                    TextTrimming="CharacterEllipsis"/>
                                         <TextBlock Text="{Binding Result}"
-                                                   Foreground="{Binding DataContext.SecondaryText, RelativeSource={RelativeSource AncestorType=ListBox}}"/>
+                                                   Foreground="{Binding DataContext.KeyForeground,
+                                                   RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                   FontSize="18"
+                                                   FontWeight="SemiBold"
+                                                   TextTrimming="CharacterEllipsis"/>
                                         <TextBlock Text="{Binding Timestamp}"
-                                                   Foreground="{Binding DataContext.SecondaryText, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                   FontSize="11"/>
+                                                   Foreground="{Binding DataContext.SecondaryText,
+                                                   RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                   FontSize="10"
+                                                   Margin="0,2,0,0"/>
                                     </StackPanel>
-                                </Button>
+                                </Border>
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-            </Border>
-        </Grid>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
