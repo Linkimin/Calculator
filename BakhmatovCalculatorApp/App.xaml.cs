@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using System.IO;
 
 namespace BakhmatovCalculatorApp;
 
@@ -9,5 +10,13 @@ namespace BakhmatovCalculatorApp;
 /// </summary>
 public partial class App : Application
 {
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        AppDomain.CurrentDomain.UnhandledException += (s, ex) =>
+        {
+            File.WriteAllText("crash.log", ex.ExceptionObject.ToString());
+        };
+        base.OnStartup(e);
+    }
 }
 
