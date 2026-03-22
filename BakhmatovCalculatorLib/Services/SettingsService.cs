@@ -4,7 +4,7 @@ using BakhmatovCalculatorLib.Models;
 
 namespace BakhmatovCalculatorLib.Services;
 
-public sealed class SettingsService
+public sealed class SettingsService : ISettingsService
 {
     private static readonly JsonSerializerOptions ReadOptions = new()
     {

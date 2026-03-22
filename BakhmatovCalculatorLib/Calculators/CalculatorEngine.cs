@@ -7,17 +7,20 @@ public sealed class CalculatorEngine
 {
     private const int MaxHistoryItems = 200;
 
-    private readonly HistoryService _historyService;
-    private readonly SettingsService _settingsService;
+    private readonly IHistoryService _historyService;
+    private readonly ISettingsService _settingsService;
 
     private readonly List<CalculationHistoryItem> _history;
     private ThemeSettings _settings;
 
-    public CalculatorEngine(string? historyFilePath = null, string? settingsFilePath = null)
+    public CalculatorEngine(
+        string? historyFilePath = null,
+        string? settingsFilePath = null,
+        IHistoryService? historyService = null,
+        ISettingsService? settingsService = null)
     {
-        _historyService = new HistoryService(historyFilePath);
-        _settingsService = new SettingsService(settingsFilePath);
-
+        _historyService = historyService ?? new HistoryService(historyFilePath);
+        _settingsService = settingsService ?? new SettingsService(settingsFilePath);
         _history = new List<CalculationHistoryItem>(_historyService.Load());
         _settings = _settingsService.Load();
     }

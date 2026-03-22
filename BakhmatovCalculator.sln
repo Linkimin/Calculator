@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11612.150 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakhmatovCalculatorLib", "BakhmatovCalculatorLib\BakhmatovCalculatorLib.csproj", "{E7A93EB9-F324-409A-AB4D-ADB280AB13FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakhmatovCalculatorApp", "BakhmatovCalculatorApp\BakhmatovCalculatorApp.csproj", "{ECF5FDB3-172D-4225-A50E-70143EA18B96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakhmatovCalculatorTests", "BakhmatovCalculatorTests\BakhmatovCalculatorTests.csproj", "{F25036B6-4977-45B0-9EC5-09724E615A38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakhmatovMathEngine", "BakhmatovMathEngine\BakhmatovMathEngine.csproj", "{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakhmatovMathEngineTests", "BakhmatovMathEngineTests\BakhmatovMathEngineTests.csproj", "{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,8 +59,35 @@ Global
 		{F25036B6-4977-45B0-9EC5-09724E615A38}.Release|x64.Build.0 = Release|Any CPU
 		{F25036B6-4977-45B0-9EC5-09724E615A38}.Release|x86.ActiveCfg = Release|Any CPU
 		{F25036B6-4977-45B0-9EC5-09724E615A38}.Release|x86.Build.0 = Release|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Debug|x64.Build.0 = Debug|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Debug|x86.Build.0 = Debug|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Release|x64.ActiveCfg = Release|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Release|x64.Build.0 = Release|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Release|x86.ActiveCfg = Release|Any CPU
+		{A49624AD-ABFC-49B2-A908-4D5C86AD6A80}.Release|x86.Build.0 = Release|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Debug|x64.Build.0 = Debug|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Debug|x86.Build.0 = Debug|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Release|x64.ActiveCfg = Release|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Release|x64.Build.0 = Release|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Release|x86.ActiveCfg = Release|Any CPU
+		{7E0D7D06-57F0-4145-A7F0-9B938F34EF0E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0950F889-5587-4117-9A5C-577040595C42}
 	EndGlobalSection
 EndGlobal

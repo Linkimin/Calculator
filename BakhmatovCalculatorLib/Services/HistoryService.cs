@@ -4,7 +4,7 @@ using BakhmatovCalculatorLib.Models;
 
 namespace BakhmatovCalculatorLib.Services;
 
-public sealed class HistoryService
+public sealed class HistoryService : IHistoryService
 {
     private static readonly JsonSerializerOptions ReadOptions = new()
     {
