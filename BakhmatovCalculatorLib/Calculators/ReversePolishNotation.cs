@@ -1,4 +1,5 @@
 using System.Globalization;
+using BakhmatovCalculatorLib.Exceptions;
 
 namespace BakhmatovCalculatorLib.Calculators;
 
@@ -116,21 +117,21 @@ public static class ReversePolishNotation
 
                 var numberText = expression.Substring(start, i - start).Replace(',', '.');
                 if (numberText == "." || numberText == "-." || numberText == "-,")
-                    throw new FormatException("Invalid number format.");
+                    throw new ParsingException("Invalid number format.");
 
                 if (!decimal.TryParse(numberText, NumberStyles.Number, CultureInfo.InvariantCulture, out var value))
-                    throw new FormatException($"Invalid number: '{numberText}'.");
+                    throw new ParsingException($"Invalid number: '{numberText}'.");
 
                 tokens.Add(new NumberToken(value));
                 previousToken = tokens[^1];
                 continue;
             }
 
-            throw new FormatException($"Unexpected character '{c}' in expression.");
+            throw new ParsingException($"Unexpected character '{c}' in expression.");
         }
 
         if (tokens.Count == 0)
-            throw new FormatException("Expression is empty.");
+            throw new ParsingException("Expression is empty.");
 
         return tokens;
     }
@@ -183,7 +184,7 @@ public static class ReversePolishNotation
                         output.Add(opStack.Pop());
 
                     if (opStack.Count == 0)
-                        throw new FormatException("Mismatched parentheses in expression.");
+                        throw new ParsingException("Mismatched parentheses in expression.");
 
                     opStack.Pop(); // remove '('
                     break;
@@ -197,8 +198,7 @@ public static class ReversePolishNotation
         {
             var token = opStack.Pop();
             if (token is LeftParenToken or RightParenToken)
-                throw new FormatException("Mismatched parentheses in expression.");
-
+                throw new ParsingException("Mismatched parentheses in expression.");
             output.Add(token);
         }
 
@@ -276,7 +276,7 @@ public static class ReversePolishNotation
                     var b = stack.Pop();
                     var a = stack.Pop();
                     if (b == 0m)
-                        throw new DivideByZeroException("Division by zero.");
+                        throw new EvaluationException("Division by zero.", new DivideByZeroException());
                     stack.Push(checked(a / b));
                 }
                 return;
@@ -297,17 +297,17 @@ public static class ReversePolishNotation
     private static void RequireOperands(Stack<decimal> stack, int count, string operationName)
     {
         if (stack.Count < count)
-            throw new FormatException($"{operationName}: missing operand.");
+            throw new ParsingException($"{operationName}: missing operand.");
     }
 
     private static int ConvertExponentToInt(decimal exponent)
     {
         var truncated = decimal.Truncate(exponent);
         if (exponent != truncated)
-            throw new NotSupportedException("Power operator supports only integer exponents.");
+            throw new EvaluationException("Power operator supports only integer exponents.");
 
         if (truncated < int.MinValue || truncated > int.MaxValue)
-            throw new OverflowException("Exponent is out of supported range.");
+            throw new EvaluationException("Exponent is out of supported range.");
 
         return (int)truncated;
     }
@@ -320,7 +320,7 @@ public static class ReversePolishNotation
         if (exponent < 0)
         {
             if (value == 0m)
-                throw new DivideByZeroException("Division by zero in negative power.");
+                throw new EvaluationException("Division by zero in negative power.", new DivideByZeroException());
 
             long positiveExp = -(long)exponent; // safe even for int.MinValue
             decimal denom = PowDecimalPositive(value, positiveExp);

@@ -1,4 +1,5 @@
 using BakhmatovCalculatorLib.Calculators;
+using BakhmatovCalculatorLib.Exceptions;
 using BakhmatovCalculatorLib.Models;
 
 namespace BakhmatovCalculatorTests;
@@ -81,7 +82,7 @@ public sealed class CalculatorEngineTests
     public void Calculate_Power_FractionalExponent_ThrowsNotSupported()
     {
         var engine = CreateEngine();
-        Assert.Throws<NotSupportedException>(() => engine.Calculate("2^0.5"));
+        Assert.Throws<EvaluationException>(() => engine.Calculate("2^0.5"));
     }
 
    
@@ -90,7 +91,7 @@ public sealed class CalculatorEngineTests
     public void Calculate_DivisionByZero_Throws()
     {
         var engine = CreateEngine();
-        Assert.Throws<DivideByZeroException>(() => engine.Calculate("8/0"));
+        Assert.Throws<EvaluationException>(() => engine.Calculate("8/0"));
     }
 
     [Fact]
@@ -111,7 +112,7 @@ public sealed class CalculatorEngineTests
     public void Calculate_InvalidExpression_ThrowsFormatException(string expression)
     {
         var engine = CreateEngine();
-        Assert.Throws<FormatException>(() => engine.Calculate(expression));
+        Assert.Throws<ParsingException>(() => engine.Calculate(expression));
     }
 
     
