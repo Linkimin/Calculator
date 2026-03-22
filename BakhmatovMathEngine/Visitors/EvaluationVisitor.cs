@@ -2,7 +2,7 @@
 using BakhmatovMathEngine.Ast.Nodes;
 using BakhmatovMathEngine.Evaluation;
 using BakhmatovMathEngine.Values;
-
+using BakhmatovMathEngine.Models;
 namespace BakhmatovMathEngine.Visitors;
 
 public sealed class EvaluationVisitor : IExpressionVisitor<Value>
@@ -62,27 +62,79 @@ public sealed class EvaluationVisitor : IExpressionVisitor<Value>
     {
         var args = node.Arguments.Select(a => a.Accept(this)).ToList();
 
+        // Однаргументные числовые функции
         if (args.Count == 1 && args[0] is NumberValue n)
         {
             double x = (double)n.Number;
+            double rad = _context.ToRadians(x); // угол с учётом AngleMode
+
             decimal result = node.Name.ToLower() switch
             {
-                "sin" => (decimal)Math.Sin(x),
-                "cos" => (decimal)Math.Cos(x),
-                "tan" => (decimal)Math.Tan(x),
-                "sqrt" => x < 0 ? throw new ArithmeticException("sqrt от отрицательного числа.") : (decimal)Math.Sqrt(x),
+                // Тригонометрия — используем rad
+                "sin" => (decimal)Math.Sin(rad),
+                "cos" => (decimal)Math.Cos(rad),
+                "tan" => (decimal)Math.Tan(rad),
+
+                // Обратная тригонометрия — результат конвертируем обратно
+                "asin" => x < -1 || x > 1
+                            ? throw new ArithmeticException("asin: аргумент вне [-1, 1].")
+                            : (decimal)FromRadians(Math.Asin(x)),
+                "acos" => x < -1 || x > 1
+                            ? throw new ArithmeticException("acos: аргумент вне [-1, 1].")
+                            : (decimal)FromRadians(Math.Acos(x)),
+                "atan" => (decimal)FromRadians(Math.Atan(x)),
+
+                // Гиперболические
+                "sinh" => (decimal)Math.Sinh(x),
+                "cosh" => (decimal)Math.Cosh(x),
+                "tanh" => (decimal)Math.Tanh(x),
+
+                // Прочие
+                "sqrt" => x < 0
+                            ? throw new ArithmeticException("sqrt: отрицательный аргумент.")
+                            : (decimal)Math.Sqrt(x),
                 "abs" => Math.Abs(n.Number),
-                "ln" => x <= 0 ? throw new ArithmeticException("ln от неположительного числа.") : (decimal)Math.Log(x),
-                "log" => x <= 0 ? throw new ArithmeticException("log от неположительного числа.") : (decimal)Math.Log10(x),
+                "ln" => x <= 0
+                            ? throw new ArithmeticException("ln: аргумент должен быть > 0.")
+                            : (decimal)Math.Log(x),
+                "log" => x <= 0
+                            ? throw new ArithmeticException("log: аргумент должен быть > 0.")
+                            : (decimal)Math.Log10(x),
                 "floor" => Math.Floor(n.Number),
                 "ceil" => Math.Ceiling(n.Number),
                 "round" => Math.Round(n.Number),
+                "sign" => (decimal)Math.Sign(n.Number),
+                "exp" => (decimal)Math.Exp(x),
+
+                // Факториал
+                "fact" => Factorial(n.Number),
+
                 _ => throw new NotSupportedException($"Функция '{node.Name}' не поддерживается.")
             };
             return new NumberValue(result);
         }
 
-        throw new NotSupportedException($"Функция '{node.Name}' с такими аргументами не поддерживается.");
+        // Двухаргументные функции
+        if (args.Count == 2 && args[0] is NumberValue a && args[1] is NumberValue b)
+        {
+            double x = (double)a.Number;
+            double y = (double)b.Number;
+
+            decimal result = node.Name.ToLower() switch
+            {
+                "log" => y <= 0 || y == 1
+                            ? throw new ArithmeticException("log: неверное основание.")
+                            : x <= 0
+                                ? throw new ArithmeticException("log: аргумент должен быть > 0.")
+                                : (decimal)(Math.Log(x) / Math.Log(y)),
+                "pow" => (decimal)Math.Pow(x, y),
+                "atan2" => (decimal)FromRadians(Math.Atan2(x, y)),
+                _ => throw new NotSupportedException($"Функция '{node.Name}' с двумя аргументами не поддерживается.")
+            };
+            return new NumberValue(result);
+        }
+
+        throw new NotSupportedException($"Функция '{node.Name}' с {args.Count} аргументами не поддерживается.");
     }
 
     public Value VisitAssignment(AssignmentNode node)
@@ -124,5 +176,29 @@ public sealed class EvaluationVisitor : IExpressionVisitor<Value>
             }
             return result;
         }
+    }
+
+    /// <summary>Конвертирует результат из радиан в текущий режим.</summary>
+    private double FromRadians(double radians) => _context.AngleMode switch
+    {
+        AngleMode.Rad => radians,
+        AngleMode.Deg => radians * 180.0 / Math.PI,
+        AngleMode.Grad => radians * 200.0 / Math.PI,
+        _ => radians
+    };
+
+    private static decimal Factorial(decimal n)
+    {
+        if (n < 0)
+            throw new ArithmeticException("fact: факториал отрицательного числа не определён.");
+        if (n != Math.Truncate(n))
+            throw new ArithmeticException("fact: факториал определён только для целых чисел.");
+        if (n > 27)
+            throw new OverflowException("fact: слишком большое число для decimal.");
+
+        decimal result = 1m;
+        for (int i = 2; i <= (int)n; i++)
+            result *= i;
+        return result;
     }
 }

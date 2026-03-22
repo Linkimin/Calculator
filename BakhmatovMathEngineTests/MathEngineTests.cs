@@ -1,5 +1,6 @@
 ﻿using BakhmatovMathEngine;
 using BakhmatovMathEngine.Exceptions;
+using BakhmatovMathEngine.Models;
 using BakhmatovMathEngine.Values;
 
 namespace BakhmatovMathEngineTests;
@@ -125,5 +126,122 @@ public sealed class MathEngineTests
     {
         var engine = new MathEngine();
         Assert.Throws<MathEngineException>(() => engine.GetVariable("z"));
+    }
+
+    // ──────────────────────────────────────────────
+    // AngleMode
+    // ──────────────────────────────────────────────
+
+    [Fact]
+    public void AngleMode_Default_IsRadians()
+    {
+        var engine = new MathEngine();
+        Assert.Equal(AngleMode.Rad, engine.AngleMode);
+    }
+
+    [Fact]
+    public void Sin_InRadians_ReturnsCorrect()
+    {
+        var engine = new MathEngine();
+        Assert.Equal(1m, Math.Round(engine.Evaluate("sin(pi/2)"), 10));
+    }
+
+    [Fact]
+    public void Sin_InDegrees_ReturnsCorrect()
+    {
+        var engine = new MathEngine();
+        engine.AngleMode = AngleMode.Deg;
+        Assert.Equal(1m, Math.Round(engine.Evaluate("sin(90)"), 10));
+    }
+
+    [Fact]
+    public void Cos_InDegrees_ReturnsCorrect()
+    {
+        var engine = new MathEngine();
+        engine.AngleMode = AngleMode.Deg;
+        Assert.Equal(1m, Math.Round(engine.Evaluate("cos(0)"), 10));
+    }
+
+    [Fact]
+    public void Sin_InGrad_ReturnsCorrect()
+    {
+        var engine = new MathEngine();
+        engine.AngleMode = AngleMode.Grad;
+        // 100 grad = pi/2 rad → sin = 1
+        Assert.Equal(1m, Math.Round(engine.Evaluate("sin(100)"), 10));
+    }
+
+    [Fact]
+    public void Asin_InDegrees_Returns90()
+    {
+        var engine = new MathEngine();
+        engine.AngleMode = AngleMode.Deg;
+        Assert.Equal(90m, Math.Round(engine.Evaluate("asin(1)"), 10));
+    }
+
+    [Fact]
+    public void Acos_InDegrees_Returns0()
+    {
+        var engine = new MathEngine();
+        engine.AngleMode = AngleMode.Deg;
+        Assert.Equal(0m, Math.Round(engine.Evaluate("acos(1)"), 10));
+    }
+
+    // ──────────────────────────────────────────────
+    // Новые функции
+    // ──────────────────────────────────────────────
+
+    [Theory]
+    [InlineData("sinh(0)", 0)]
+    [InlineData("cosh(0)", 1)]
+    [InlineData("tanh(0)", 0)]
+    [InlineData("exp(0)", 1)]
+    [InlineData("sign(-5)", -1)]
+    [InlineData("sign(5)", 1)]
+    [InlineData("sign(0)", 0)]
+    public void NewFunctions_ReturnCorrectResults(string input, decimal expected)
+    {
+        var engine = new MathEngine();
+        Assert.Equal(expected, Math.Round(engine.Evaluate(input), 10));
+    }
+
+    [Theory]
+    [InlineData("fact(0)", 1)]
+    [InlineData("fact(1)", 1)]
+    [InlineData("fact(5)", 120)]
+    [InlineData("fact(10)", 3628800)]
+    public void Factorial_ReturnsCorrectResults(string input, decimal expected)
+    {
+        var engine = new MathEngine();
+        Assert.Equal(expected, engine.Evaluate(input));
+    }
+
+    [Fact]
+    public void Factorial_Negative_Throws()
+    {
+        var engine = new MathEngine();
+        Assert.Throws<ArithmeticException>(() => engine.Evaluate("fact(-1)"));
+    }
+
+    [Fact]
+    public void Factorial_Fractional_Throws()
+    {
+        var engine = new MathEngine();
+        Assert.Throws<ArithmeticException>(() => engine.Evaluate("fact(1.5)"));
+    }
+
+    [Fact]
+    public void Log_WithBase_ReturnsCorrect()
+    {
+        var engine = new MathEngine();
+        // log(8, 2) = 3
+        Assert.Equal(3m, Math.Round(engine.Evaluate("log(8, 2)"), 10));
+    }
+
+    [Fact]
+    public void Log_Base10_ReturnsCorrect()
+    {
+        var engine = new MathEngine();
+        Assert.Equal(2m, Math.Round(engine.Evaluate("log(100)"), 10));
     }
 }

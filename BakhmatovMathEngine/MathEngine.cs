@@ -3,6 +3,7 @@ using BakhmatovMathEngine.Exceptions;
 using BakhmatovMathEngine.Parsing;
 using BakhmatovMathEngine.Values;
 using BakhmatovMathEngine.Visitors;
+using BakhmatovMathEngine.Models;
 
 namespace BakhmatovMathEngine;
 
@@ -66,4 +67,10 @@ public sealed class MathEngine
     /// </summary>
     public bool HasVariable(string name)
         => _context.TryGet(name, out _);
+
+    public AngleMode AngleMode
+    {
+        get => _context.AngleMode;
+        set => _context.AngleMode = value;
+    }
 }
