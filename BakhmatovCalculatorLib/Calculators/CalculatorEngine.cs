@@ -3,7 +3,7 @@ using BakhmatovCalculatorLib.Services;
 
 namespace BakhmatovCalculatorLib.Calculators;
 
-public sealed class CalculatorEngine
+public sealed class CalculatorEngine : ICalculatorEngine
 {
     private const int MaxHistoryItems = 200;
 
