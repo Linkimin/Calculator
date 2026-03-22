@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace BakhmatovMathEngine.Ast;
 
-namespace BakhmatovMathEngine.Ast
+public interface IExpression
 {
-    internal interface IExpression
-    {
-    }
+    T Accept<T>(IExpressionVisitor<T> visitor);
 }

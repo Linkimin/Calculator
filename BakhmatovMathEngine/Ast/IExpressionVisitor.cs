@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BakhmatovMathEngine.Ast.Nodes;
 
-namespace BakhmatovMathEngine.Ast
+namespace BakhmatovMathEngine.Ast;
+
+public interface IExpressionVisitor<out T>
 {
-    internal interface IExpressionVisitor
-    {
-    }
+    T VisitNumber(NumberNode node);
+    T VisitVariable(VariableNode node);
+    T VisitBinaryOp(BinaryOpNode node);
+    T VisitUnaryOp(UnaryOpNode node);
+    T VisitFunction(FunctionNode node);
+    T VisitAssignment(AssignmentNode node);
 }
